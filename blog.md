@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Space is my home"
+title: "Blog"
 ---
 
 {% if site.show_excerpts %}
