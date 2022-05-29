@@ -8,6 +8,6 @@ Buschmann](https://github.com/niklasbuschmann/contrast). For the moment,
 I'd like to keep an air of mystery about me. If you already know me, check
 out this image from my home village & have a guess which viewpoint it depicts.
 
-`![Home](/assets/style_transfer_result_at_iteration_34.png))`
+![Home village](/assets/style_transfer_result_at_iteration_34.png)
 
 Best, mxli417
