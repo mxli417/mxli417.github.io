@@ -1,5 +1,5 @@
 ---
-title: "vbot — voice-first LLM interactions"
+title: "📣 vbot — voice-first LLM interactions"
 layout: post
 ---
 
