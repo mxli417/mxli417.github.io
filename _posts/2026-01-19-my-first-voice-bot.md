@@ -13,8 +13,7 @@ As part of that work, I decided to step back and investigate a related question:
 
 That exploration resulted in **vbot**, also referred to as **scarlett**.
 
-📲 Repository:  
-https://github.com/mxli417/vbot
+📲 Repo: **[https://github.com/mxli417/vbot](https://github.com/mxli417/vbot)**
 
 
 ## 💡 Motivation

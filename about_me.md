@@ -4,8 +4,7 @@ permalink: "/about_me/"
 layout: page
 ---
 
-This is my personal page, built using the *Contrast* theme by  
-[Niklas Buschmann](https://github.com/niklasbuschmann/contrast).
+This is my personal page, built using the *Contrast* theme by [Niklas Buschmann](https://github.com/niklasbuschmann/contrast).
 
 I write about applied machine learning and engineering — especially the parts
 that become interesting once systems leave the notebook and face real-world
