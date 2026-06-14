@@ -16,11 +16,14 @@ minimal: true             # use a dark header
 # Menu
 
 navigation:                # accepts {file, title, url, icon, sidebaricon}
-  - {file: "blog.md", title: Blog}
+  - {file: "notes.md", title: Notes}
+  - {file: "engineering.md", title: Engineering}
+  - {file: "research.md", title: Research}
   - {file: "about_me.md", title: About me}
+  - {file: "legal.md", title: Legal Note}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
-  - {title: Mail, icon: envelope, url: "mailto:mxli417@users.noreply.github.com"}
+  - {title: Mail, icon: envelope, url: "mailto:mx.meidinger@outlook.com"}
   - {title: Github, icon: github, url: "https://github.com/mxli417"}
   - {title: Subscribe, icon: rss, url: "/feed.xml"}
 

@@ -1,6 +1,7 @@
 ---
 title: "📣 vbot — voice-first LLM interactions"
 layout: post
+categories: engineering
 ---
 
 Over the past months I’ve been working on a Twilio-based project

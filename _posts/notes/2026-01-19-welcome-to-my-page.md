@@ -1,6 +1,7 @@
 ---
 title: "🙋 Welcome to my page"
 layout: post
+categories: notes
 ---
 
 This is my personal developer blog — a place to collect thoughts, experiments,
@@ -10,7 +11,7 @@ that tend to break once theory meets reality.
 My main interests currently revolve around:
 
 - applied machine learning and MLOps  
-- applied statistics and stochastic systems  
+- applied statistics and stochastic systems
 - computational social science (when time permits)  
 - systems that appear simple but hide non-obvious complexity  
 - reproducible setups, tooling, and engineering workflows  

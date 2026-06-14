@@ -1,6 +1,7 @@
 ---
 title: "🥤MLFlow to go "
 layout: post
+categories: engineering
 ---
 
 # A Portable, Dockerized MLflow Tracking Server (with MinIO + Postgres)

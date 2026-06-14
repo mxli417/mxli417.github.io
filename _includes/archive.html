@@ -1,11 +1,20 @@
 <article>
   <header><h1>{{ include.title | default: page.title }}</h1></header>
+  {% if include.description %}
+  <p>{{ include.description }}</p>
+  {% endif %}
+  {% assign posts = site.posts %}
+  {% if include.category %}
+    {% assign posts = site.posts | where_exp: "post", "post.categories contains include.category" %}
+  {% endif %}
   <ul class="archive">
-    {% for post in site.posts %}
+    {% for post in posts %}
     <li>
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </li>
+    {% else %}
+    <li>No posts yet.</li>
     {% endfor %}
   </ul>
 </article>

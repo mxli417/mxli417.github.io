@@ -36,9 +36,10 @@
 
 {% if site.external %}
 <footer>
-  <div>{{ site.description | default: site.title }}</div>
+  {% include legal_footer.html %}
   {% include menu.html menu=site.external %}
 </footer>
 {% endif %}
 
 </html>
+
