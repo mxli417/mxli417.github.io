@@ -37,7 +37,7 @@ An earlier R/Shiny prototype illustrating Beta–Binomial updating through obser
 
 ## In progress
 
-Current personal projects include search allocation ([OptiSearch](https://github.com/mxli417/optisearch)), entropy-based dataset sampling, and network estimation from time series. These are unfinished projects, with no package release announced.
+Current personal projects include search allocation ([OptiSearch](https://github.com/mxli417/optisearch)), entropy-based dataset sampling, and network estimation from time series. Another idea is LLM-assisted annotation in Label Studio, with suggested labels for human review. These are unfinished projects, with no package release announced.
 
   </div>
 </article>
