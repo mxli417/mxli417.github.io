@@ -6,3 +6,4 @@ Gemfile.lock
 _site
 *.gem
 thought_archive/*
+BACKLOG.md

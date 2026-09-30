@@ -1,6 +1,9 @@
 title: "Mxli's personal page"
 author: "mxli417"
-description: "Made with <b style=\"color: #f45;\">&lt;3</b>"
+description: "Applied machine learning, NLP, and statistics: research papers, open-source projects, and technical notes by Maximilian Meidinger."
+url: "https://mxli417.github.io"
+baseurl: ""
+exclude: [README.md, BACKLOG.md, thought_archive, scripts]
 permalink: /:title/
 lang: "en"
 excerpt_separator: "\n\n\n"
@@ -16,11 +19,11 @@ minimal: true             # use a dark header
 # Menu
 
 navigation:                # accepts {file, title, url, icon, sidebaricon}
-  - {file: "notes.md", title: Notes}
-  - {file: "engineering.md", title: Engineering}
+  - {file: "projects.md", title: Projects}
+  - {file: "papers.md", title: Papers}
+  - {file: "blog.md", title: Blog}
   - {file: "research.md", title: Research}
   - {file: "about_me.md", title: About me}
-  - {file: "legal.md", title: Legal Note}
 
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
   - {title: Mail, icon: envelope, url: "mailto:mx.meidinger@outlook.com"}

@@ -12,6 +12,7 @@
     <li>
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      {% if post.status %}<span class="status-label">{{ post.status | escape }}</span>{% endif %}
     </li>
     {% else %}
     <li>No posts yet.</li>

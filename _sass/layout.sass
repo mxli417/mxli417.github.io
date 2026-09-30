@@ -4,6 +4,10 @@ body
 
 article
   flex-grow: 1
+  min-width: 0
+  box-sizing: border-box
+  width: 100%
+  overflow-wrap: anywhere
 
 body > header, body > footer
   display: flex
@@ -25,4 +29,97 @@ nav
   margin: .5em -1.2em
 
 nav a
-  margin: .5em 1.2em
+  display: inline-block
+  margin: .35em .7em
+
+.intro
+  background: reduce(4)
+
+.intro h1
+  max-width: 26ch
+  line-height: 1.2
+
+.feature-grid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 1.25em
+
+.feature-card
+  padding: 1.25em
+  border: 1px solid reduce(25)
+  border-radius: .5em
+  background: reduce(4)
+
+.feature-card h3
+  font-size: 1.25em
+  line-height: 1.35
+  margin: .7em 0
+
+.status-label
+  display: inline-block
+  font-size: .75em
+  font-weight: 600
+  padding: .15em .55em
+  border: 1px solid reduce(35)
+  border-radius: .3em
+
+article header .status-label, .archive .status-label
+  margin-left: .6em
+
+@media (max-width: 40em)
+  .feature-grid
+    grid-template-columns: 1fr
+  body > header, body > article, body > footer
+    padding: 1.25em
+  nav
+    margin: .5em -.7em
+
+.featured-work > header, article > header:has(h2)
+  margin-bottom: 1.25em
+
+article > header h2
+  margin: 0
+  font-size: 1.35em
+
+.eyebrow
+  font-size: .8em
+  letter-spacing: .025em
+
+.feature-card p
+  margin-bottom: 0
+
+.section-link
+  margin-top: 1.5em
+
+nav a.selected
+  text-decoration: underline
+  text-underline-offset: .3em
+
+.archive
+  list-style: none
+  padding: 0
+
+.archive li
+  display: grid
+  grid-template-columns: 10ch minmax(0, 1fr)
+  column-gap: 1em
+  padding: 1em 0
+  margin: 0
+  border-bottom: 1px solid reduce(18)
+
+.archive .status-label
+  justify-self: start
+  grid-column: 2
+  margin: .6em 0 0
+
+.archive time
+  font-size: .85em
+  margin: .2em 0 0
+
+@media (max-width: 40em)
+  .archive li
+    grid-template-columns: 1fr
+  .archive .status-label
+    grid-column: 1
+  .intro h1
+    font-size: 1.8em

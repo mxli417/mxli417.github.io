@@ -1,81 +1,65 @@
 (function () {
-  function detection(rate, effort) {
-    return 1 - Math.exp(-rate * Math.max(0, effort));
+  "use strict";
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
   }
 
-  function probabilityOfSuccess(p1, a1, t1, a2, t2) {
+  function detectionProbability(rate, effort) {
+    const safeRate = Math.max(0, rate);
+    const safeEffort = Math.max(0, effort);
+
+    return -Math.expm1(-safeRate * safeEffort);
+  }
+
+  function probabilityOfSuccess(params, t1, t2) {
+    const p1 = params.p1;
     const p2 = 1 - p1;
+
+    const q1 = detectionProbability(params.a1, t1);
+    const q2 = detectionProbability(params.a2, t2);
+
+    return p1 * q1 + p2 * q2;
+  }
+
+  function posteriorAfterFailure(params, t1, t2) {
+    const p1 = params.p1;
+    const p2 = 1 - p1;
+
+    const log1 = Math.log(p1) - params.a1 * t1;
+    const log2 = Math.log(p2) - params.a2 * t2;
+    const offset = Math.max(log1, log2);
+    const weight1 = Math.exp(log1 - offset);
+    const weight2 = Math.exp(log2 - offset);
+    return {
+      p1Posterior: weight1 / (weight1 + weight2),
+      p2Posterior: weight2 / (weight1 + weight2)
+    };
+  }
+
+  function marginalReturnPerCost(params, drawer, effort) {
+    if (drawer === 1) {
+      return (
+        params.p1 *
+        params.a1 *
+        Math.exp(-params.a1 * effort)
+      ) / params.c1;
+    }
 
     return (
-      p1 * detection(a1, t1) +
-      p2 * detection(a2, t2)
-    );
-  }
-
-  function posteriorAfterFailedSearch(p1, a1, t1, a2, t2) {
-    const p2 = 1 - p1;
-
-    const miss1 = 1 - detection(a1, t1);
-    const miss2 = 1 - detection(a2, t2);
-
-    const denominator = p1 * miss1 + p2 * miss2;
-
-    if (denominator <= 0) {
-      return {
-        p1Posterior: NaN,
-        p2Posterior: NaN
-      };
-    }
-
-    return {
-      p1Posterior: (p1 * miss1) / denominator,
-      p2Posterior: (p2 * miss2) / denominator
-    };
-  }
-
-  function bruteForceOptimum(params) {
-    const {
-      p1,
-      budget,
-      c1,
-      c2,
-      a1,
-      a2
-    } = params;
-
-    let best = {
-      t1: 0,
-      t2: 0,
-      value: probabilityOfSuccess(p1, a1, 0, a2, 0)
-    };
-
-    const maxT1 = budget / c1;
-    const step = Math.max(maxT1 / 500, 0.005);
-
-    for (let t1 = 0; t1 <= maxT1; t1 += step) {
-      const remainingBudget = budget - c1 * t1;
-
-      if (remainingBudget < 0) {
-        continue;
-      }
-
-      const t2 = remainingBudget / c2;
-      const value = probabilityOfSuccess(p1, a1, t1, a2, t2);
-
-      if (value > best.value) {
-        best = {
-          t1,
-          t2,
-          value
-        };
-      }
-    }
-
-    return best;
+      (1 - params.p1) *
+      params.a2 *
+      Math.exp(-params.a2 * effort)
+    ) / params.c2;
   }
 
   function readNumber(id) {
     const element = document.getElementById(id);
+
+    if (!element) {
+      return NaN;
+    }
+
     return Number.parseFloat(element.value);
   }
 
@@ -90,7 +74,46 @@
     };
   }
 
-  function writeText(id, value) {
+  function validateParams(params) {
+    const errors = [];
+
+    if (!Number.isFinite(params.p1) || params.p1 <= 0 || params.p1 >= 1) {
+      errors.push("Prior probability must be between 0 and 1.");
+    }
+
+    if (!Number.isFinite(params.budget) || params.budget <= 0) {
+      errors.push("Search budget must be positive.");
+    }
+
+    if (!Number.isFinite(params.c1) || params.c1 <= 0) {
+      errors.push("Cost in drawer 1 must be positive.");
+    }
+
+    if (!Number.isFinite(params.c2) || params.c2 <= 0) {
+      errors.push("Cost in drawer 2 must be positive.");
+    }
+
+    if (!Number.isFinite(params.a1) || params.a1 <= 0) {
+      errors.push("Detection rate in drawer 1 must be positive.");
+    }
+
+    if (!Number.isFinite(params.a2) || params.a2 <= 0) {
+      errors.push("Detection rate in drawer 2 must be positive.");
+    }
+
+    return errors;
+  }
+
+  function findBestAllocation(params) {
+    const logRatio = Math.log(params.p1) + Math.log(params.a1) - Math.log(params.c1)
+      - Math.log1p(-params.p1) - Math.log(params.a2) + Math.log(params.c2);
+    const t1 = clamp((logRatio + params.a2 * params.budget / params.c2)
+      / (params.a1 + params.a2 * params.c1 / params.c2), 0, params.budget / params.c1);
+    const t2 = Math.max(0, (params.budget - params.c1 * t1) / params.c2);
+    return { t1: t1, t2: t2, value: probabilityOfSuccess(params, t1, t2) };
+  }
+
+  function setText(id, value) {
     const element = document.getElementById(id);
 
     if (element) {
@@ -98,83 +121,14 @@
     }
   }
 
-  function validateParams(params) {
-    const errors = [];
-
-    if (!(params.p1 > 0 && params.p1 < 1)) {
-      errors.push("The prior probability p₁ must be between 0 and 1.");
-    }
-
-    if (!(params.budget > 0)) {
-      errors.push("The search budget must be positive.");
-    }
-
-    if (!(params.c1 > 0 && params.c2 > 0)) {
-      errors.push("Search costs c₁ and c₂ must be positive.");
-    }
-
-    if (!(params.a1 > 0 && params.a2 > 0)) {
-      errors.push("Detection rates a₁ and a₂ must be positive.");
-    }
-
-    return errors;
-  }
-
   function colorForValue(value) {
-    const clamped = Math.max(0, Math.min(1, value));
+    const v = clamp(value, 0, 1);
 
-    const red = Math.round(255 - 160 * clamped);
-    const green = Math.round(255 - 190 * clamped);
-    const blue = Math.round(255 - 40 * clamped);
+    const red = Math.round(245 - 145 * v);
+    const green = Math.round(245 - 175 * v);
+    const blue = Math.round(245 - 30 * v);
 
-    return `rgb(${red}, ${green}, ${blue})`;
-  }
-
-  function drawAxes(ctx, width, height, padding, maxT1, maxT2) {
-    const plotWidth = width - 2 * padding;
-    const plotHeight = height - 2 * padding;
-
-    ctx.strokeStyle = "#222";
-    ctx.lineWidth = 1.5;
-
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, height - padding);
-    ctx.lineTo(width - padding, height - padding);
-    ctx.stroke();
-
-    ctx.fillStyle = "#222";
-    ctx.font = "12px system-ui, sans-serif";
-
-    ctx.fillText("t₁: effort in drawer 1", width / 2 - 55, height - 10);
-
-    ctx.save();
-    ctx.translate(15, height / 2 + 55);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText("t₂: effort in drawer 2", 0, 0);
-    ctx.restore();
-
-    ctx.fillText("0", padding - 12, height - padding + 16);
-    ctx.fillText(maxT1.toFixed(1), width - padding - 20, height - padding + 16);
-    ctx.fillText(maxT2.toFixed(1), padding - 34, padding + 4);
-
-    ctx.strokeStyle = "#ddd";
-    ctx.lineWidth = 1;
-
-    for (let i = 1; i <= 4; i++) {
-      const x = padding + (i / 4) * plotWidth;
-      const y = height - padding - (i / 4) * plotHeight;
-
-      ctx.beginPath();
-      ctx.moveTo(x, padding);
-      ctx.lineTo(x, height - padding);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(padding, y);
-      ctx.lineTo(width - padding, y);
-      ctx.stroke();
-    }
+    return "rgb(" + red + "," + green + "," + blue + ")";
   }
 
   function drawHeatmap(params, optimum) {
@@ -188,127 +142,187 @@
 
     const width = canvas.width;
     const height = canvas.height;
-    const padding = 48;
+    const padding = 52;
 
     const plotWidth = width - 2 * padding;
     const plotHeight = height - 2 * padding;
 
-    const {
-      p1,
-      budget,
-      c1,
-      c2,
-      a1,
-      a2
-    } = params;
-
-    const maxT1 = budget / c1;
-    const maxT2 = budget / c2;
+    const maxT1 = params.budget / params.c1;
+    const maxT2 = params.budget / params.c2;
 
     ctx.clearRect(0, 0, width, height);
 
     const cellSize = 4;
 
-    for (let px = 0; px <= plotWidth; px += cellSize) {
-      for (let py = 0; py <= plotHeight; py += cellSize) {
-        const t1 = (px / plotWidth) * maxT1;
-        const t2 = ((plotHeight - py) / plotHeight) * maxT2;
+    for (let x = 0; x <= plotWidth; x += cellSize) {
+      for (let y = 0; y <= plotHeight; y += cellSize) {
+        const t1 = (x / plotWidth) * maxT1;
+        const t2 = ((plotHeight - y) / plotHeight) * maxT2;
 
-        const feasible = c1 * t1 + c2 * t2 <= budget + 1e-9;
+        const cost = params.c1 * t1 + params.c2 * t2;
+        const feasible = cost <= params.budget + 1e-9;
 
-        if (!feasible) {
-          ctx.fillStyle = "#f0f0f0";
-        } else {
-          const value = probabilityOfSuccess(p1, a1, t1, a2, t2);
+        if (feasible) {
+          const value = probabilityOfSuccess(params, t1, t2);
           ctx.fillStyle = colorForValue(value);
+        } else {
+          ctx.fillStyle = "#eeeeee";
         }
 
-        ctx.fillRect(padding + px, padding + py, cellSize, cellSize);
+        ctx.fillRect(padding + x, padding + y, cellSize, cellSize);
       }
     }
 
-    drawAxes(ctx, width, height, padding, maxT1, maxT2);
+    drawGridAndAxes(ctx, width, height, padding, plotWidth, plotHeight, maxT1, maxT2);
+    drawBudgetLine(ctx, height, padding, plotWidth, plotHeight);
+    drawOptimum(ctx, height, padding, plotWidth, plotHeight, maxT1, maxT2, optimum);
+    drawLegend(ctx, width, padding);
+  }
 
-    // Budget line: c1 * t1 + c2 * t2 = B
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 2;
+  function drawGridAndAxes(ctx, width, height, padding, plotWidth, plotHeight, maxT1, maxT2) {
+    ctx.save();
 
-    const xIntercept = padding + plotWidth;
-    const yIntercept = height - padding - plotHeight;
+    ctx.strokeStyle = "#dddddd";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= 4; i += 1) {
+      const x = padding + (i / 4) * plotWidth;
+      const y = padding + (i / 4) * plotHeight;
+
+      ctx.beginPath();
+      ctx.moveTo(x, padding);
+      ctx.lineTo(x, height - padding);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(padding, y);
+      ctx.lineTo(width - padding, y);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = "#222222";
+    ctx.lineWidth = 1.5;
 
     ctx.beginPath();
-    ctx.moveTo(padding, yIntercept);
-    ctx.lineTo(xIntercept, height - padding);
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, height - padding);
+    ctx.lineTo(width - padding, height - padding);
     ctx.stroke();
 
-    // Optimum point
-    const ox = padding + (optimum.t1 / maxT1) * plotWidth;
-    const oy = height - padding - (optimum.t2 / maxT2) * plotHeight;
+    ctx.fillStyle = "#222222";
+    ctx.font = "12px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+
+    ctx.fillText("0", padding - 14, height - padding + 16);
+    ctx.fillText(maxT1.toFixed(1), width - padding - 24, height - padding + 16);
+    ctx.fillText(maxT2.toFixed(1), padding - 42, padding + 4);
+
+    ctx.fillText("effort in drawer 1", width / 2 - 45, height - 14);
+
+    ctx.save();
+    ctx.translate(18, height / 2 + 45);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText("effort in drawer 2", 0, 0);
+    ctx.restore();
+
+    ctx.restore();
+  }
+
+  function drawBudgetLine(ctx, height, padding, plotWidth, plotHeight) {
+    ctx.save();
+
+    ctx.strokeStyle = "#111111";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding + plotWidth, padding + plotHeight);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawOptimum(ctx, height, padding, plotWidth, plotHeight, maxT1, maxT2, optimum) {
+    const x = padding + (optimum.t1 / maxT1) * plotWidth;
+    const y = height - padding - (optimum.t2 / maxT2) * plotHeight;
+
+    ctx.save();
 
     ctx.fillStyle = "#c62828";
     ctx.beginPath();
-    ctx.arc(ox, oy, 6, 0, 2 * Math.PI);
+    ctx.arc(x, y, 6, 0, 2 * Math.PI);
     ctx.fill();
 
-    ctx.strokeStyle = "#fff";
+    ctx.strokeStyle = "#ffffff";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(ox, oy, 6, 0, 2 * Math.PI);
+    ctx.arc(x, y, 6, 0, 2 * Math.PI);
     ctx.stroke();
 
-    // Legend
-    ctx.fillStyle = "#333";
-    ctx.font = "12px system-ui, sans-serif";
-    ctx.fillText("red dot = optimum", width - padding - 115, padding - 15);
-    ctx.fillText("grey = infeasible", width - padding - 115, padding);
+    ctx.restore();
+  }
+
+  function drawLegend(ctx, width, padding) {
+    ctx.save();
+
+    ctx.font = "12px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+    ctx.fillStyle = "#333333";
+    ctx.fillText("red = optimum", width - padding - 110, padding - 18);
+    ctx.fillText("grey = infeasible", width - padding - 110, padding - 2);
+
+    ctx.restore();
   }
 
   function updateWidget() {
     const params = readParams();
+    const result = document.getElementById("two-drawer-result");
 
-    writeText("two-drawer-p1-value", params.p1.toFixed(2));
-    writeText("two-drawer-p2-value", (1 - params.p1).toFixed(2));
-    writeText("two-drawer-budget-value", params.budget.toFixed(1));
+    setText("two-drawer-p1-value", params.p1.toFixed(3));
+    setText("two-drawer-p2-value", (1 - params.p1).toFixed(3));
+    setText("two-drawer-budget-value", params.budget.toFixed(1));
 
     const errors = validateParams(params);
-    const resultElement = document.getElementById("two-drawer-result");
 
     if (errors.length > 0) {
-      if (resultElement) {
-        resultElement.innerHTML = errors.join("<br>");
+      document.getElementById("two-drawer-heatmap").hidden = true;
+      if (result) {
+        result.innerHTML = errors.join("<br>");
       }
       return;
     }
 
-    const optimum = bruteForceOptimum(params);
+    const optimum = findBestAllocation(params);
+    document.getElementById("two-drawer-heatmap").hidden = false;
 
-    const q1 = detection(params.a1, optimum.t1);
-    const q2 = detection(params.a2, optimum.t2);
+    const q1 = detectionProbability(params.a1, optimum.t1);
+    const q2 = detectionProbability(params.a2, optimum.t2);
 
-    const posterior = posteriorAfterFailedSearch(
-      params.p1,
-      params.a1,
-      optimum.t1,
-      params.a2,
-      optimum.t2
-    );
+    const posterior = posteriorAfterFailure(params, optimum.t1, optimum.t2);
+
+    const mr1 = marginalReturnPerCost(params, 1, optimum.t1);
+    const mr2 = marginalReturnPerCost(params, 2, optimum.t2);
 
     drawHeatmap(params, optimum);
 
-    if (resultElement) {
-      resultElement.innerHTML = `
-        <strong>Optimal allocation under the current budget:</strong><br>
-        Drawer 1 effort: <strong>${optimum.t1.toFixed(2)}</strong><br>
-        Drawer 2 effort: <strong>${optimum.t2.toFixed(2)}</strong><br>
-        Cost used: <strong>${(params.c1 * optimum.t1 + params.c2 * optimum.t2).toFixed(2)}</strong>
-        out of ${params.budget.toFixed(2)}<br>
-        Probability of success: <strong>${(100 * optimum.value).toFixed(1)}%</strong><br>
-        Detection probability in drawer 1: <strong>${(100 * q1).toFixed(1)}%</strong><br>
-        Detection probability in drawer 2: <strong>${(100 * q2).toFixed(1)}%</strong><br>
-        Posterior after a failed search:
-        p₁′ = <strong>${posterior.p1Posterior.toFixed(3)}</strong>,
-        p₂′ = <strong>${posterior.p2Posterior.toFixed(3)}</strong>
-      `;
+    if (result) {
+      result.innerHTML =
+        "<strong>Best feasible allocation</strong><br>" +
+        "Drawer 1 effort: <strong>" + optimum.t1.toFixed(2) + "</strong><br>" +
+        "Drawer 2 effort: <strong>" + optimum.t2.toFixed(2) + "</strong><br>" +
+        "Cost used: <strong>" +
+        (params.c1 * optimum.t1 + params.c2 * optimum.t2).toFixed(2) +
+        "</strong> / " + params.budget.toFixed(2) + "<br>" +
+        "Probability of detection: <strong>" +
+        (100 * optimum.value).toFixed(1) + "%</strong><br>" +
+        "Conditional detection in drawer 1: <strong>" +
+        (100 * q1).toFixed(1) + "%</strong><br>" +
+        "Conditional detection in drawer 2: <strong>" +
+        (100 * q2).toFixed(1) + "%</strong><br>" +
+        "Posterior after failed search: " +
+        "p₁′ = <strong>" + posterior.p1Posterior.toFixed(3) + "</strong>, " +
+        "p₂′ = <strong>" + posterior.p2Posterior.toFixed(3) + "</strong><br>" +
+        "Marginal gain per cost at optimum: " +
+        "drawer 1 = <strong>" + mr1.toFixed(4) + "</strong>, " +
+        "drawer 2 = <strong>" + mr2.toFixed(4) + "</strong>";
     }
   }
 
@@ -319,18 +333,29 @@
       return;
     }
 
-    [
+    document.getElementById("two-drawer-reset").addEventListener("click", function () {
+      const defaults = { p1: 2 / 3, budget: 2, c1: 1, c2: 1, a1: 1, a2: 1 };
+      Object.keys(defaults).forEach(function (key) {
+        document.getElementById("two-drawer-" + key).value = defaults[key];
+      });
+      updateWidget();
+    });
+
+    const inputIds = [
       "two-drawer-p1",
       "two-drawer-budget",
       "two-drawer-c1",
       "two-drawer-c2",
       "two-drawer-a1",
       "two-drawer-a2"
-    ].forEach(function (id) {
+    ];
+
+    inputIds.forEach(function (id) {
       const element = document.getElementById(id);
 
       if (element) {
         element.addEventListener("input", updateWidget);
+        element.addEventListener("change", updateWidget);
       }
     });
 

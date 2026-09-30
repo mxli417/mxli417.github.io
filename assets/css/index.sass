@@ -5,7 +5,10 @@
 
 @media (min-width: 40em)
   body > header, body > article, body > footer
-    padding: 1.75em calc(40% - 17em)
+    padding: 2.5em unquote("max(1.5em, (100% - 72rem) / 2)")
+
+  body > article
+    padding-inline: unquote("max(1.5em, (100% - 48rem) / 2)")
 
 {% if site.minimal %}
 

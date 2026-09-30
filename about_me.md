@@ -4,19 +4,10 @@ permalink: "/about_me/"
 layout: page
 ---
 
-This is my personal page, built using the *Contrast* theme by [Niklas Buschmann](https://github.com/niklasbuschmann/contrast).
+I work in generative AI engineering and data science, with a focus on NLP, document processing, and LLM applications. My experience covers modelling, evaluation, and the integration of machine-learning services into production systems, including in banking.
 
-I write about applied machine learning and engineering — especially the parts
-that become interesting once systems leave the notebook and face real-world
-constraints.
+My academic background is in statistics and sociology. My [research interests]({{ '/research/' | relative_url }}) include knowledge integration, the evaluation of NLP and LLM systems, and probabilistic modelling.
 
-My current focus areas include ML & GenAI engineering, natural language
-processing, and applied statistics, with a particular interest in stochastic
-systems and, when time permits, computational social science. Most posts are
-pragmatic in nature: small experiments, technical notes, and lightweight
-blueprints derived from my own work.
+This site collects technical notes, small experiments, and personal projects. See [Projects]({{ '/projects/' | relative_url }}) for current ideas and implementations, and [Papers]({{ '/papers/' | relative_url }}) for selected publications.
 
-This page is intentionally minimal and content-driven. Its purpose is to
-document ideas, experiments, and observations in a concise and reproducible
-form, written primarily for clarity and long-term reference rather than as a
-polished portfolio or showcase.
+Built using the *Contrast* theme by [Niklas Buschmann](https://github.com/niklasbuschmann/contrast).

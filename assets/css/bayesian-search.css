@@ -1,4 +1,8 @@
 .search-widget {
+  box-sizing: border-box;
+  width: 100%;
+  color: #242733;
+  color-scheme: light;
   max-width: 760px;
   margin: 2rem 0;
   padding: 1.25rem;
@@ -6,6 +10,23 @@
   border-radius: 12px;
   background: #fafafa;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.search-widget button {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #5464a0;
+  border-radius: 6px;
+  background: #fff;
+  color: #303e79;
+  font: inherit;
+  cursor: pointer;
+}
+
+.search-control input { min-width: 0; box-sizing: border-box; }
+#two-drawer-heatmap[hidden] { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  .search-widget { border-color: #62697e; }
 }
 
 .search-widget h3 {

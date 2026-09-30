@@ -1,14 +1,24 @@
 ---
-title: "📄 Previous academic work"
+title: "NLP benchmarks and document classification: selected papers"
 layout: post
 categories: research
+description: Selected publications on survey-response classification and synthetic data for document classification.
 ---
 
-Some of my earlier work touched applied machine learning research, especially
-around NLP for social-science data and document classification.
+Two publications I contributed to, on survey-response classification and synthetic data for document classification.
 
-Selected papers I contributed to:
+## Classifying open-ended survey responses
 
+The 2021 ICAART paper with Matthias Aßenmacher presents a benchmark for classifying open-ended survey responses from the American National Election Study. It compares logistic regression with BERT, RoBERTa, and XLNet.
 
-- Meidinger, M., & Aßenmacher, M. (2021). [A new benchmark for NLP in social sciences: Evaluating the usefulness of pre-trained language models for classifying open-ended survey responses](https://epub.ub.uni-muenchen.de/75923/1/102551.pdf). In *Proceedings of the 13th International Conference on Agents and Artificial Intelligence (ICAART 2021)* (Vol. 2, pp. 866-873). SCITEPRESS. https://doi.org/10.5220/0010255108660873
-- Deußer, T., et al. (2025). [Leveraging synthetically generated data for real estate document classification](https://ieeexplore.ieee.org/abstract/document/11400789). In *2025 IEEE International Conference on Big Data (BigData)*. IEEE.
+[Read the paper](https://epub.ub.uni-muenchen.de/75923/1/102551.pdf) · [DOI](https://doi.org/10.5220/0010255108660873) · [Code and benchmark repository](https://github.com/mxli417/co_benchmark)
+
+## Synthetic data for document classification
+
+The 2025 IEEE BigData paper examines synthetically generated training data for real estate document classification.
+
+[Publisher record](https://ieeexplore.ieee.org/abstract/document/11400789) · [Open-access manuscript](https://bonndoc.ulb.uni-bonn.de/xmlui/bitstream/handle/20.500.11811/13972/2025_Leveraging_Classification.pdf?sequence=3)
+
+Full citations are collected in the [Papers section]({{ '/papers/' | relative_url }}).
+
+Related topics are listed under [research interests]({{ '/research/' | relative_url }}).

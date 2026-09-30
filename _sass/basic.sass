@@ -23,7 +23,16 @@ b, strong, th
   font-weight: $font-weight + 200
 
 p
-  text-align: justify
+  text-align: left
+
+a:focus-visible, input:focus-visible, button:focus-visible
+  outline: 3px solid $link-color
+  outline-offset: 4px
+
+.katex-display
+  overflow-x: auto
+  overflow-y: hidden
+  padding: .4em 0
 
 a
   color: $link-color
@@ -94,3 +103,23 @@ pre
   border-radius: 2px
   margin: 0 .1em
   padding: .2em .4em
+
+// Distinct link colours keep text readable in either system theme.
+@media (prefers-color-scheme: dark)
+  article a
+    color: #a2baff
+
+article p a, article li a, article td a
+  text-decoration: underline
+  text-decoration-thickness: 1px
+  text-underline-offset: .18em
+
+h1, h2, h3
+  line-height: 1.3
+
+article > h2
+  margin-top: 2em
+
+table
+  overflow-x: auto
+  overflow-y: auto

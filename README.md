@@ -1,6 +1,6 @@
 # Mxli's Personal Page
 
-A small Jekyll-powered GitHub Pages site for notes, engineering write-ups,
+A small Jekyll-powered GitHub Pages site for my personal notes, engineering write-ups,
 research-adjacent thoughts, and the occasional interactive experiment.
 
 The site is built on the [Contrast theme](https://github.com/niklasbuschmann/contrast)
@@ -75,6 +75,23 @@ this repository so the page can stay lightweight, personal, and easy to tweak.
 
 ## Local Development
 
+The current portfolio has dedicated `/projects/` and `/papers/` pages. Maintain
+the local working checklist in `BACKLOG.md` (gitignored and excluded from the generated site).
+Run `node scripts/check-two-drawer.cjs` to verify the interactive search model.
+
+### Search indexing
+
+Production canonical URLs use `https://mxli417.github.io`. The build generates
+`/sitemap.xml` and `/robots.txt`; `/blog/` is the explicit blog route.
+After deployment, submit the sitemap in Google Search Console and inspect the
+homepage and individual post URLs. Google does not guarantee indexing.
+On 2026-09-30, the live site returned HTTP 200 but still served January content;
+its homepage had no `noindex` directive and `/robots.txt` returned 404. A missing
+robots file does not prohibit crawling. Search Console is needed to distinguish
+discovery, crawl, canonicalization, and indexing issues.
+
+See [Google's indexing guidance](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl).
+
 Install dependencies:
 
 ```sh
@@ -88,6 +105,27 @@ bundle exec jekyll serve
 ```
 
 Then open the local URL printed by Jekyll, usually `http://127.0.0.1:4000/`.
+
+## Deployment readiness
+
+Before publishing, run:
+
+```sh
+node scripts/check-two-drawer.cjs
+bundle exec jekyll build --safe
+bundle exec jekyll doctor
+```
+
+Use `JEKYLL_ENV=production` for the final build (in PowerShell:
+`$env:JEKYLL_ENV = "production"`). The generated site is in `_site/`.
+`BACKLOG.md` and `thought_archive/` are excluded from the build and ignored by Git;
+do not force-add them. Build output and local caches are ignored too.
+
+This repository has no custom deployment workflow. Retain the existing GitHub
+Pages publishing source in repository Settings → Pages when publishing the
+reviewed changes. Check the Pages build/deployment result after pushing and verify
+`/papers/`, `/projects/`, `/research/`, `/blog/`, `/sitemap.xml`, and `/robots.txt`.
+The source changes alone do not deploy the site.
 
 ## Change History
 
