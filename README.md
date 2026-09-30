@@ -22,7 +22,7 @@ this repository so the page can stay lightweight, personal, and easy to tweak.
 ```text
 .
 |-- _config.yml              # Site title, navigation, social links, plugins, layout flags
-|-- index.html               # Homepage introduction and publication links
+|-- index.html               # Homepage introduction with About and Research links
 |-- projects.md              # Featured articles and interactive examples
 |-- papers.md                # Standalone publication URL retained for existing links
 |-- blog.md                  # Ordered post archive and project notes at /blog/

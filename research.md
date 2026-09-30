@@ -8,7 +8,7 @@ permalink: "/research/"
   <header><h1>Research interests</h1></header>
   <p>My interests include applied NLP, statistical modelling, and the relationship between benchmark design and practical applications. This page collects publications and occasional notes on those topics.</p>
   <h2 id="papers">Papers</h2>
-  <p><a href="{% post_url /research/2026-06-14-previous-work %}">NLP benchmarks and document classification</a> introduces the questions behind my papers. The <a href="{{ '/papers/' | relative_url }}">Papers section</a> collects citations, manuscripts, and available code.</p>
+  <p><a href="{% post_url /research/2026-06-14-previous-work %}">NLP benchmarks and document classification</a> introduces the questions behind my papers. Citations, manuscripts, and available code are collected below.</p>
   <div markdown="1">
 
 {% include papers.md %}
