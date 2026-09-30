@@ -7,7 +7,7 @@ permalink: /blog/
 {% assign welcome = site.posts | where: "slug", "welcome-to-my-page" %}
 {% assign mlflow = site.posts | where: "slug", "mlflow-to-go" %}
 {% assign vbot = site.posts | where: "slug", "my-first-voice-bot" %}
-{% assign remaining = site.posts | where_exp: "post", "post.slug != 'welcome-to-my-page' and post.slug != 'mlflow-to-go' and post.slug != 'my-first-voice-bot'" %}
+{% assign remaining = site.posts | where_exp: "post", "post.slug != 'welcome-to-my-page'" | where_exp: "post", "post.slug != 'mlflow-to-go'" | where_exp: "post", "post.slug != 'my-first-voice-bot'" %}
 {% assign blog_posts = welcome | concat: mlflow | concat: vbot | concat: remaining %}
 {% include archive.html title="Blog" posts=blog_posts %}
 

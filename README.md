@@ -98,6 +98,11 @@ issues; local build checks cannot establish whether Google has indexed a page.
 
 See [Google's indexing guidance](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl).
 
+The Gemfile pins Jekyll 3.10.0 and the Sass/Markdown renderer versions used by
+GitHub Pages branch builds. Validate with these versions, not Jekyll 4: compound
+conditions inside `where_exp` are not supported by Jekyll 3.10. Chain separate
+filters instead. The local Ruby version and optional Pages plugins may still differ.
+
 Install dependencies:
 
 ```sh

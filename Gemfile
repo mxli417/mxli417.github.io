@@ -1,10 +1,14 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.2.0"
+# Match the GitHub Pages branch-build renderer (github-pages 232).
+gem "jekyll", "3.10.0"
+gem "jekyll-sass-converter", "1.5.2"
+gem "kramdown", "2.4.0"
+gem "kramdown-parser-gfm", "1.1.0"
 gem "csv"
 
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
+  gem "jekyll-feed", "0.17.0"
 end
 
 gem "logger", "~> 1.7"
