@@ -3,7 +3,7 @@
   {% if include.description %}
   <p>{{ include.description }}</p>
   {% endif %}
-  {% assign posts = site.posts %}
+  {% assign posts = include.posts | default: site.posts %}
   {% if include.category %}
     {% assign posts = site.posts | where_exp: "post", "post.categories contains include.category" %}
   {% endif %}

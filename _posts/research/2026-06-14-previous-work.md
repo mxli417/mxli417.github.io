@@ -19,6 +19,6 @@ The 2025 IEEE BigData paper examines synthetically generated training data for r
 
 [Publisher record](https://ieeexplore.ieee.org/abstract/document/11400789) · [Open-access manuscript](https://bonndoc.ulb.uni-bonn.de/xmlui/bitstream/handle/20.500.11811/13972/2025_Leveraging_Classification.pdf?sequence=3)
 
-Full citations are collected in the [Papers section]({{ '/papers/' | relative_url }}).
+Full citations are collected in the [Papers section]({{ '/research/' | relative_url }}#papers).
 
 Related topics are listed under [research interests]({{ '/research/' | relative_url }}).
