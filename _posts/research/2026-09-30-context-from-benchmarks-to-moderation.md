@@ -1,5 +1,6 @@
 ---
 layout: post
+toc: true
 title: "The state of contextualized German hate-speech research in 2026"
 categories: [research]
 status: Research discussion

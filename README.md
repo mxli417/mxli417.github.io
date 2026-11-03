@@ -3,14 +3,15 @@
 A small Jekyll-powered GitHub Pages site for my personal notes, engineering write-ups,
 research-adjacent thoughts, and the occasional interactive experiment.
 
-The site is built on the [Contrast theme](https://github.com/niklasbuschmann/contrast)
-by [Niklas Buschmann](https://github.com/niklasbuschmann). Local changes live in
-this repository so the page can stay lightweight, personal, and easy to tweak.
+The site vendors [So Simple 3.2.0](https://github.com/mmistakes/so-simple-theme)
+by Michael Rose. Theme files live in this repository so GitHub Pages branch builds
+do not depend on a remote theme gem. Site-specific styles are kept separate in
+`assets/css/site.scss`.
 
 ## At A Glance
 
 - **Framework:** Jekyll, served by GitHub Pages.
-- **Theme base:** Contrast by Niklas Buschmann.
+- **Theme base:** Vendored So Simple 3.2.0 with local presentation overrides.
 - **Main navigation:** Projects, Blog, Research, About me. Papers are collected under Research. Legal is linked in the footer.
 - **Post organization:** Category folders under `_posts/`.
 - **Math support:** Vendored KaTeX assets in `assets/katex/`.
@@ -43,16 +44,15 @@ this repository so the page can stay lightweight, personal, and easy to tweak.
 |   `-- post.html            # Blog post wrapper
 |-- _includes/
 |   |-- archive.html         # Archive list component, with optional category filtering
-|   |-- home.html            # Excerpt-based home listing when enabled
-|   |-- menu.html            # Navigation renderer
-|   |-- meta.html            # Post metadata renderer
-|   |-- sidebar.html         # Optional sidebar navigation
-|   |-- legal_footer.html    # Footer legal text/link area
-|   `-- embed.html           # Small embed helper
-|-- _sass/                   # Core theme Sass partials
+|   |-- head.html            # Metadata and stylesheet links
+|   |-- navigation.html      # Primary navigation
+|   |-- masthead.html        # Site title and description
+|   |-- footer.html          # Contact, RSS, and legal links
+|   `-- read-time.html       # Estimated article reading time
+|-- _sass/                   # Vendored So Simple Sass partials
 |-- assets/
-|   |-- css/                 # Sass/CSS entry points and custom styles
-|   |-- js/                  # Custom browser scripts, including the two-drawer search widget
+|   |-- css/                 # Theme, skin, and site-specific Sass entry points
+|   |-- js/                  # TOC enhancement and the two-drawer search widget
 |   |-- fonts/               # Local PT Sans files and license
 |   |-- fontawesome/         # Icon sprite
 |   |-- katex/               # Local KaTeX distribution
@@ -78,6 +78,8 @@ this repository so the page can stay lightweight, personal, and easy to tweak.
   category filters. Projects and Research are curated manually, so publishing a post
   does not automatically feature it there.
 - Use `mathjax: true` in page/post front matter when KaTeX rendering is needed.
+- Use `toc: true` on longer posts to generate an on-page table of contents from
+  level-two and level-three headings.
 - Custom interactive behavior belongs in `assets/js/`; custom presentation belongs
   in `assets/css/` or the Sass partials under `_sass/`.
 
@@ -101,21 +103,51 @@ See [Google's indexing guidance](https://developers.google.com/search/docs/crawl
 The Gemfile pins Jekyll 3.10.0 and the Sass/Markdown renderer versions used by
 GitHub Pages branch builds. Validate with these versions, not Jekyll 4: compound
 conditions inside `where_exp` are not supported by Jekyll 3.10. Chain separate
-filters instead. The local Ruby version and optional Pages plugins may still differ.
+filters instead.
+
+Use Ruby 3.1 locally. The legacy Sass compiler required by the GitHub Pages-compatible
+dependency set is not a reliable Ruby 4.0 combination. On Windows, install a Ruby
+3.1 RubyInstaller build with MSYS2/DevKit, then confirm that the selected shell uses it:
+
+```powershell
+ruby --version
+where.exe ruby
+```
+
+The first command should report `ruby 3.1.x`; `where.exe` should list that installation
+before any Ruby 4 installation. Node.js 18 or later is sufficient for the dependency-free
+JavaScript checks.
 
 Install dependencies:
 
-```sh
-bundle install
+```powershell
+gem install bundler -v 2.5.23
+bundle _2.5.23_ install
 ```
 
 Serve locally:
 
-```sh
-bundle exec jekyll serve
+```powershell
+bundle _2.5.23_ exec jekyll serve --livereload
 ```
 
 Then open the local URL printed by Jekyll, usually `http://127.0.0.1:4000/`.
+Check the homepage, `/projects/`, `/blog/`, `/research/`, and one long article at
+both desktop and mobile widths. Verify keyboard focus, navigation wrapping, the
+article table of contents, KaTeX rendering, and the two-drawer controls.
+
+If Ruby 3.1 is not installed, Docker can run the compatible toolchain without
+changing the system Ruby. From the repository root in PowerShell:
+
+```powershell
+docker run --rm -p 4000:4000 `
+  -v "${PWD}:/source:ro" `
+  -v mxli417-ruby-gems:/usr/local/bundle `
+  ruby:3.1 bash -lc "cp -R /source /tmp/site && cd /tmp/site && rm -f Gemfile.lock && gem install bundler -v 2.5.23 --no-document && bundle _2.5.23_ install && bundle _2.5.23_ exec jekyll serve --host 0.0.0.0 --port 4000"
+```
+
+This serves a snapshot at `http://localhost:4000/`; stop it with `Ctrl+C` and rerun
+the command after source changes. The named Docker volume caches installed gems.
 
 ## Deployment readiness
 
@@ -124,6 +156,7 @@ Before publishing, run:
 ```sh
 node scripts/check-two-drawer.cjs
 bundle exec jekyll build --safe
+node scripts/check-site.cjs
 bundle exec jekyll doctor
 ```
 
@@ -151,6 +184,9 @@ do not publish the site.
 - **2026-09:** Added dedicated Papers and Projects pages, the contextual hate-speech
   discussion, and the interactive optimal-search walkthrough. Simplified navigation
   and the homepage, added indexing metadata, and kept detailed plans private.
+- **2026-11:** Migrated the locally vendored theme from Contrast to So Simple 3.2.0,
+  preserving KaTeX and the interactive search article while adding responsive
+  navigation, reading times, and generated article tables of contents.
 
 Blog pins Welcome, MLflow to Go, and vbot first, followed by remaining posts in
 reverse chronological order. Publication citations are shared through

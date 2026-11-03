@@ -1,6 +1,7 @@
 ---
 title: "Looking for the uncertain: the Theory of Optimal Search (Stone, 1975)"
 layout: post
+toc: true
 mathjax: true
 description: An illustrated derivation of optimal search allocation, from the two-drawer problem to unequal search costs and Bayesian updating.
 categories: [notes, optimal-search, bayesian-search, statistics]

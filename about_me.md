@@ -10,4 +10,4 @@ My academic background is in statistics. My [research interests]({{ '/research/'
 
 This site collects technical notes, small experiments, and personal projects. See [Projects]({{ '/projects/' | relative_url }}) for current ideas and implementations, and [Papers]({{ '/research/' | relative_url }}#papers) for selected publications.
 
-Built using the *Contrast* theme by [Niklas Buschmann](https://github.com/niklasbuschmann/contrast).
+Built using [So Simple](https://github.com/mmistakes/so-simple-theme) by Michael Rose.

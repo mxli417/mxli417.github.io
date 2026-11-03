@@ -1,6 +1,7 @@
 ---
 title: "📣 vbot — voice-first LLM interactions"
 layout: post
+toc: true
 categories: engineering
 ---
 

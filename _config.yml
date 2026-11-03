@@ -9,12 +9,12 @@ lang: "en"
 excerpt_separator: "\n\n\n"
 date_format: "%B %d, %Y"
 
-# Layout
-
-show_excerpts: false        # show article excerpts on the home page
-show_frame: false           # adds a gray frame to the site
-show_sidebar: false        # show a sidebar instead of the usual header
-minimal: true             # use a dark header
+# So Simple 3.2.0 is vendored locally for GitHub Pages branch builds.
+skin: "/assets/css/skins/light.css"
+locale: "en"
+read_time: true
+words_per_minute: 220
+show_excerpts: false
 
 # Menu
 
