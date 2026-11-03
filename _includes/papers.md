@@ -1,3 +1,10 @@
+## 2026
+
+**MUCnoHARM@GermEval Shared Task 2026: Retrieval-based In-Context Learning for Defamatory Offences, and Where It Falls Short**<br>
+Gnadt, K.; Meidinger, M.; Aßenmacher, M. (2026). *GermEval Workshop on Harmful Content Detection at KONVENS 2026.*
+
+[arXiv:2609.09791](https://arxiv.org/abs/2609.09791) · [DOI: 10.48550/arXiv.2609.09791](https://doi.org/10.48550/arXiv.2609.09791)
+
 ## 2025
 
 **Leveraging Synthetically Generated Data for Real Estate Document Classification**  

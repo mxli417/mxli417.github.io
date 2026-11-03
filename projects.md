@@ -2,22 +2,69 @@
 layout: default
 title: Projects
 permalink: /projects/
-description: Developed articles and interactive examples.
+description: Software, interactive tools, and reproducible research artifacts.
 ---
 
 <article class="featured-work">
   <header><h1>Projects</h1></header>
+  <p>Projects are things I build: software, interactive tools, and reusable research artifacts. Explanatory articles live in the <a href="{{ '/blog/' | relative_url }}">Blog</a>; publications and research-led essays live under <a href="{{ '/research/' | relative_url }}">Research</a>.</p>
+  <section class="project-section" aria-labelledby="applications-title">
+  <h2 id="applications-title">Applications &amp; engines</h2>
   <div class="feature-grid">
     <section class="feature-card">
-      <span class="eyebrow">Interactive explanation</span>
-      <h3><a href="{% post_url /notes/2026-06-14-looking-for-the-uncertain-theory-of-optimal-search %}">Searching when detection is uncertain</a></h3>
-      <p>A two-drawer problem introduces optimal search: where to look, how long to search, and what a failed search tells us.</p>
+      <span class="eyebrow">Python · Risk &amp; pricing engine</span>
+      <h3><a href="https://github.com/mxli417/bookie">Bookie</a></h3>
+      <p>A small educational engine for studying fixed-odds pricing, exposure, liability, risk limits, and settlement through deterministic simulations.</p>
+      <p><a href="https://github.com/mxli417/bookie">View repository <span aria-hidden="true">↗</span></a></p>
     </section>
     <section class="feature-card">
-      <span class="eyebrow">Literature discussion · 2026</span>
-      <h3><a href="{% post_url /research/2026-09-30-context-from-benchmarks-to-moderation %}">Context in German hate-speech research</a></h3>
-      <p>What conversational datasets preserve, what studies find, and how those inputs relate to moderation workflows.</p>
+      <span class="eyebrow">Python · Voice transcription</span>
+      <h3><a href="https://github.com/mxli417/wappler">Wappler</a></h3>
+      <p>A completed Twilio and OpenAI experiment that accepts WhatsApp voice notes through a signed webhook, transcribes the audio, and returns the text.</p>
+      <p><a href="https://github.com/mxli417/wappler">View repository <span aria-hidden="true">↗</span></a></p>
+    </section>
+    <section class="feature-card">
+      <span class="eyebrow">Pet search &amp; rescue prototype</span>
+      <h3><a href="https://github.com/mxli417/flufftrace">FluffTrace</a></h3>
+      <p>A cat search-and-rescue project that applies the uncertain-detection and search-allocation ideas developed in OptiSearch to a practical pet-search setting.</p>
+      <p><a href="https://github.com/mxli417/flufftrace">View repository <span aria-hidden="true">↗</span></a></p>
+    </section>
+    <section class="feature-card">
+      <span class="eyebrow">Interactive probability model</span>
+      <h3><a href="https://github.com/mxli417/optisearch">OptiSearch</a></h3>
+      <p>An implementation of optimal search allocation: how to divide a limited budget when detection is uncertain and failed searches update the belief state.</p>
+      <p><a href="{% post_url /notes/2026-06-14-looking-for-the-uncertain-theory-of-optimal-search %}">Try the interactive explanation <span aria-hidden="true">→</span></a></p>
     </section>
   </div>
-  <p class="section-link"><a href="{{ '/blog/' | relative_url }}">All articles →</a></p>
+  </section>
+
+  <section class="project-section" aria-labelledby="libraries-title">
+  <h2 id="libraries-title">Libraries &amp; research artifacts</h2>
+  <div class="feature-grid">
+    <section class="feature-card">
+      <span class="eyebrow">Mini library · LLM evaluation</span>
+      <h3><a href="https://github.com/mxli417/likeli">Likeli</a></h3>
+      <p>A small library for calculating and working with LLM likelihoods.</p>
+      <p><a href="https://github.com/mxli417/likeli">View repository <span aria-hidden="true">↗</span></a></p>
+    </section>
+    <section class="feature-card">
+      <span class="eyebrow">NLP benchmark &amp; code</span>
+      <h3><a href="https://github.com/mxli417/co_benchmark">Survey-response classification</a></h3>
+      <p>Code and benchmark material for comparing logistic regression and pretrained language models on open-ended survey responses.</p>
+      <p><a href="{{ '/research/' | relative_url }}#papers">Paper and citation <span aria-hidden="true">→</span></a></p>
+    </section>
+    <section class="feature-card">
+      <span class="eyebrow">R/Shiny prototype</span>
+      <h3><a href="https://github.com/mxli417/Bayesian_Conductor">Bayesian Conductor</a></h3>
+      <p>An exploratory visualization of Beta–Binomial updating using observations of train-ticket inspections.</p>
+      <p><a href="https://github.com/mxli417/Bayesian_Conductor">View repository <span aria-hidden="true">↗</span></a></p>
+    </section>
+    <section class="feature-card">
+      <span class="eyebrow">Early-stage research · For later</span>
+      <h3><a href="https://github.com/mxli417/latentlinks">LatentLinks</a></h3>
+      <p>An early research direction for inferring networks from coupled latent-state dynamics. The repository is retained as a starting point for later development.</p>
+      <p><a href="https://github.com/mxli417/latentlinks">View repository <span aria-hidden="true">↗</span></a></p>
+    </section>
+  </div>
+  </section>
 </article>

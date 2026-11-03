@@ -23,14 +23,14 @@ do not depend on a remote theme gem. Site-specific styles are kept separate in
 ```text
 .
 |-- _config.yml              # Site title, navigation, social links, plugins, layout flags
-|-- index.html               # Homepage introduction with About and Research links
-|-- projects.md              # Featured articles and interactive examples
+|-- index.html               # Profile landing page with expertise, projects, and recent research
+|-- projects.md              # Software, interactive tools, and research artifacts
 |-- papers.md                # Standalone publication URL retained for existing links
-|-- blog.md                  # Ordered post archive and project notes at /blog/
+|-- blog.md                  # Reverse-chronological article archive at /blog/
 |-- notes.md                 # Notes category archive; outside the main navigation
 |-- engineering.md           # Engineering category archive; outside the main navigation
-|-- research.md              # Research interests, full paper citations, and discussion article
-|-- about_me.md              # Personal intro and theme credit
+|-- research.md              # Publications and selected research-led writing
+|-- about_me.md              # Personal intro, image, and theme credit
 |-- legal.md                 # Legal note / imprint-style page
 |-- archive.html             # General archive page
 |-- 404.html                 # Not-found page
@@ -74,9 +74,10 @@ do not depend on a remote theme gem. Site-specific styles are kept separate in
   Jekyll's `YYYY-MM-DD-title.md` naming convention.
 - Add a new top-level page by creating a Markdown or HTML file with front matter,
   then add it to `navigation` in `_config.yml` if it should appear in the menu.
-- Blog lists all posts; Notes and Engineering use `_includes/archive.html` with
-  category filters. Projects and Research are curated manually, so publishing a post
-  does not automatically feature it there.
+- Blog lists all posts in reverse chronological order; Notes and Engineering use
+  `_includes/archive.html` with category filters. Projects collects built software,
+  tools, and repositories. Research collects publications and selected research-led
+  writing; both are curated manually.
 - Use `mathjax: true` in page/post front matter when KaTeX rendering is needed.
 - Use `toc: true` on longer posts to generate an on-page table of contents from
   level-two and level-three headings.
@@ -85,8 +86,6 @@ do not depend on a remote theme gem. Site-specific styles are kept separate in
 
 ## Local Development
 
-Optional local planning files (`BACKLOG.md` and `thought_archive/`) are gitignored
-and excluded from the generated site; they are not part of a fresh clone.
 Run `node scripts/check-two-drawer.cjs` to verify the interactive search model.
 
 ### Search indexing
@@ -162,8 +161,7 @@ bundle exec jekyll doctor
 
 Use `JEKYLL_ENV=production` for the final build (in PowerShell:
 `$env:JEKYLL_ENV = "production"`). The generated site is in `_site/`.
-`BACKLOG.md` and `thought_archive/` are excluded from the build and ignored by Git;
-do not force-add them. Build output and local caches are ignored too.
+Build output and local caches are ignored; do not force-add them.
 
 Publish changes through a pull request from `staging` into `master`. Review the
 diff and any configured checks before merging. This repository has no custom
@@ -188,6 +186,5 @@ do not publish the site.
   preserving KaTeX and the interactive search article while adding responsive
   navigation, reading times, and generated article tables of contents.
 
-Blog pins Welcome, MLflow to Go, and vbot first, followed by remaining posts in
-reverse chronological order. Publication citations are shared through
-`_includes/papers.md` between Research and the retained `/papers/` page.
+Publication citations are shared through `_includes/papers.md` between Research
+and the retained `/papers/` page.

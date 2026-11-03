@@ -5,5 +5,6 @@
 Gemfile.lock
 _site
 *.gem
-thought_archive/*
+thought_archive/
 BACKLOG.md
+STAGING_TESTS.md

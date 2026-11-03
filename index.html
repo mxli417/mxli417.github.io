@@ -1,10 +1,64 @@
 ---
 layout: default
-title: "Notes on ML, NLP, and applied statistics"
+title: "Applied AI engineering and research"
+classes: [home]
 ---
 
-<article class="intro">
-  <header><h1>Notes on machine learning and applied statistics.</h1></header>
-  <p>I work in generative AI engineering, with a background in statistics. Here I collect technical articles, interactive examples, and published work.</p>
-  <p><a href="{{ '/about_me/' | relative_url }}">About me</a> · <a href="{{ '/research/' | relative_url }}">Research</a></p>
+<article class="home-landing">
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="home-hero__copy">
+      <p class="eyebrow">Applied AI engineering · Statistics · Research</p>
+      <h1 id="home-title">Building practical ML and LLM systems for real-world use.</h1>
+      <p class="home-lede">With a background in statistics and hands-on experience in Document AI, NLP, computer vision, and Generative AI, I build classical ML and LLM-powered systems for real-world applications.</p>
+      <p>My work spans document processing in banking, agentic chat and RAG solutions, and prototyping agentic AI applications at appliedAI.</p>
+      <p class="home-actions">
+        <a class="btn btn--primary" href="{{ '/projects/' | relative_url }}">Explore projects</a>
+        <a class="home-text-link" href="{{ '/about_me/' | relative_url }}">More about me <span aria-hidden="true">→</span></a>
+      </p>
+    </div>
+  </section>
+
+  <section class="home-profile" aria-labelledby="profile-title">
+    <div>
+      <p class="eyebrow">Profile</p>
+      <h2 id="profile-title">From statistical foundations to deployed AI.</h2>
+    </div>
+    <div>
+      <p>I hold an M.Sc. in Statistics and have (co-)authored publications on NLP benchmarking, synthetic data for document classification, and retrieval-based in-context learning. I enjoy turning complex challenges into practical, well-evaluated AI solutions that carry real value for their users.</p>
+      <p>Let’s connect to exchange ideas on GenAI, multimodal RAG, and AI engineering. <a href="mailto:mx.meidinger@outlook.com">Get in touch <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="home-expertise" aria-labelledby="expertise-title">
+    <p class="eyebrow">What I work on</p>
+    <h2 id="expertise-title">Applied systems, evaluated end to end.</h2>
+    <div class="feature-grid">
+      <section class="feature-card">
+        <h3>Document &amp; multimodal AI</h3>
+        <p>Document processing, classification, extraction, and retrieval across text and visual inputs.</p>
+      </section>
+      <section class="feature-card">
+        <h3>LLM &amp; agent systems</h3>
+        <p>Agentic chat, RAG, and Generative AI prototypes designed around real workflows rather than isolated demos.</p>
+      </section>
+      <section class="feature-card">
+        <h3>Evaluation &amp; reliability</h3>
+        <p>Testing, benchmark design, and statistical reasoning for systems whose quality cannot be reduced to one metric.</p>
+      </section>
+    </div>
+  </section>
+
+  <aside class="home-publication" aria-labelledby="publication-title">
+    <div>
+      <p class="eyebrow">Recent publication · GermEval 2026</p>
+      <h2 id="publication-title">Retrieval-based in-context learning for defamatory offences—and where it falls short.</h2>
+      <p>Our shared-task study examines retrieval strategies, legal knowledge, and model choice for classifying criminally relevant social-media posts.</p>
+    </div>
+    <p class="home-publication__link"><a href="https://arxiv.org/abs/2609.09791">Read the paper on arXiv <span aria-hidden="true">↗</span></a></p>
+  </aside>
+
+  <nav class="home-more" aria-label="More from this site">
+    <a href="{{ '/blog/' | relative_url }}">Technical writing <span aria-hidden="true">→</span></a>
+    <a href="{{ '/research/' | relative_url }}">Research &amp; papers <span aria-hidden="true">→</span></a>
+  </nav>
 </article>
