@@ -3,11 +3,15 @@ layout: default
 title: Projects
 permalink: /projects/
 description: Software, interactive tools, and reproducible research artifacts.
+classes: [top-level]
 ---
 
 <article class="featured-work">
-  <header><h1>Projects</h1></header>
-  <p>Projects are things I build: software, interactive tools, and reusable research artifacts. Explanatory articles live in the <a href="{{ '/blog/' | relative_url }}">Blog</a>; publications and research-led essays live under <a href="{{ '/research/' | relative_url }}">Research</a>.</p>
+  <header class="section-hero">
+    <p class="eyebrow">Built work</p>
+    <h1>Projects</h1>
+    <p class="section-hero__lede">Software, interactive tools, and reusable research artifacts. Explanatory articles live in the <a href="{{ '/blog/' | relative_url }}">Blog</a>; publications and research-led essays live under <a href="{{ '/research/' | relative_url }}">Research</a>.</p>
+  </header>
   <section class="project-section" aria-labelledby="applications-title">
   <h2 id="applications-title">Applications &amp; engines</h2>
   <div class="feature-grid">

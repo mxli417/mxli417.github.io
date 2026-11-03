@@ -127,6 +127,14 @@ h6 {
   padding-bottom: 2.5rem;
 }
 
+.top-level .masthead {
+  display: none;
+}
+
+.top-level .page-content {
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+}
+
 .page-title {
   letter-spacing: -0.035em;
   font-style: normal;
@@ -154,6 +162,29 @@ h6 {
 .intro h1 {
   max-width: 26ch;
   line-height: 1.15;
+}
+
+.section-hero {
+  max-width: 54rem;
+  margin-bottom: clamp(2.75rem, 7vw, 5rem);
+  padding-bottom: clamp(2rem, 5vw, 3.25rem);
+  border-bottom: 1px solid var(--site-border);
+}
+
+.section-hero h1,
+.about-hero h1 {
+  max-width: 18ch;
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.section-hero__lede {
+  max-width: 48rem;
+  margin-bottom: 0;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.55;
 }
 
 .home .page-wrapper {
@@ -260,33 +291,59 @@ h6 {
   border-top: 1px solid var(--site-border);
 }
 
-.about-profile {
+.about-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
   gap: clamp(2rem, 6vw, 4rem);
-  align-items: start;
+  align-items: center;
+  margin-bottom: clamp(2.75rem, 7vw, 5rem);
+  padding-bottom: clamp(2.5rem, 6vw, 4rem);
+  border-bottom: 1px solid var(--site-border);
 }
 
-.about-profile__copy > :first-child {
-  margin-top: 0;
+.about-hero h1 {
+  max-width: 12ch;
 }
 
-.about-profile__visual {
+.about-hero > *,
+.about-profile > * {
+  min-width: 0;
+}
+
+.about-hero__visual {
+  width: 100%;
   margin: 0;
 }
 
-.about-profile__visual img {
+.about-hero__visual img {
   display: block;
   width: 100%;
   border-radius: 0.65rem;
   box-shadow: 0.75rem 0.75rem 0 var(--site-surface);
 }
 
-.about-profile__visual figcaption {
+.about-hero__visual figcaption {
   margin: 0.75rem 0 0 0.75rem;
   color: var(--site-muted);
   font-size: 0.8rem;
   line-height: 1.4;
+}
+
+.about-profile {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.about-profile > p {
+  margin-top: 0;
+}
+
+.theme-credit {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  color: var(--site-muted);
+  border-top: 1px solid var(--site-border);
 }
 
 .feature-grid {
@@ -434,6 +491,21 @@ table {
 }
 
 @media (max-width: 48rem) {
+  .site-nav ul {
+    gap: 0.1rem;
+    padding-right: 0.35rem;
+    padding-left: 0.35rem;
+  }
+
+  .site-nav li {
+    font-size: 0.7rem;
+  }
+
+  .site-nav a {
+    padding-right: 0.45rem;
+    padding-left: 0.45rem;
+  }
+
   .masthead {
     padding-top: 2rem;
     padding-bottom: 1.75rem;
@@ -449,8 +521,13 @@ table {
 
   .home-profile,
   .home-publication,
+  .about-hero,
   .about-profile {
     grid-template-columns: 1fr;
+  }
+
+  .about-hero__visual {
+    max-width: 32rem;
   }
 
   .home-expertise .feature-grid {

@@ -2,11 +2,15 @@
 layout: default
 title: "Research"
 permalink: "/research/"
+classes: [top-level]
 ---
 
 <article>
-  <header><h1>Research interests</h1></header>
-  <p>Research collects my publications and research-led essays in applied NLP, statistical modelling, and AI evaluation. Implemented software and repositories are listed under <a href="{{ '/projects/' | relative_url }}">Projects</a>; the complete chronological article archive is the <a href="{{ '/blog/' | relative_url }}">Blog</a>.</p>
+  <header class="section-hero">
+    <p class="eyebrow">Publications &amp; inquiry</p>
+    <h1>Research</h1>
+    <p class="section-hero__lede">Publications and research-led essays in applied NLP, statistical modelling, and AI evaluation. Implemented software and repositories are listed under <a href="{{ '/projects/' | relative_url }}">Projects</a>; the complete chronological article archive is the <a href="{{ '/blog/' | relative_url }}">Blog</a>.</p>
+  </header>
   <h2 id="papers">Papers</h2>
   <p><a href="{% post_url /research/2026-06-14-previous-work %}">Selected research: NLP benchmarks, synthetic data, and retrieval-based ICL</a> connects the questions and evaluation principles behind these projects. Citations, manuscripts, and available code are collected below.</p>
   <div markdown="1">

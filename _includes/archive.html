@@ -1,8 +1,9 @@
 <article>
-  <header><h1>{{ include.title | default: page.title }}</h1></header>
-  {% if include.description %}
-  <p>{{ include.description }}</p>
-  {% endif %}
+  <header class="section-hero">
+    {% if include.eyebrow %}<p class="eyebrow">{{ include.eyebrow }}</p>{% endif %}
+    <h1>{{ include.title | default: page.title }}</h1>
+    {% if include.description %}<p class="section-hero__lede">{{ include.description }}</p>{% endif %}
+  </header>
   {% assign posts = include.posts | default: site.posts %}
   {% if include.category %}
     {% assign posts = site.posts | where_exp: "post", "post.categories contains include.category" %}
