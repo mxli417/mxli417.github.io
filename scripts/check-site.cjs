@@ -26,6 +26,9 @@ const requiredFiles = [
   "assets/imgs/bookie_dashboard_lower_mid.png",
   "assets/imgs/bookie_dashboard_lower_foot.png",
   "assets/imgs/bookie_dashboard_footer.png",
+  "assets/imgs/favicon-32.png",
+  "assets/imgs/favicon-192.png",
+  "assets/imgs/apple-touch-icon.png",
 ];
 
 const problems = [];
@@ -69,6 +72,12 @@ for (const relativePath of htmlFiles) {
   }
   if (!html.includes('id="primary-nav"')) {
     problems.push(`primary navigation missing from ${relativePath}`);
+  }
+  if (!html.includes('/assets/imgs/favicon-32.png')) {
+    problems.push(`favicon missing from ${relativePath}`);
+  }
+  if (!html.includes('class="site-mark"')) {
+    problems.push(`navigation brand mark missing from ${relativePath}`);
   }
   if (!html.includes('id="main"')) {
     problems.push(`main landmark missing from ${relativePath}`);
