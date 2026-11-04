@@ -361,7 +361,7 @@ If instead we search only one drawer and do not detect the coin, the same calcul
 
 ## OptiSearch: from the example to a package
 
-This browser example is a self-contained demonstration. I am developing **OptiSearch**, a Python package for search-allocation experiments; implementation, reproducible examples, and release preparation remain in progress. Follow the [project overview]({{ "/projects/" | relative_url }}) for its scope.
+This browser example is a self-contained demonstration. I am developing **OptiSearch**, a Python package for search-allocation experiments; implementation, reproducible examples, and release preparation remain in progress. The [OptiSearch repository](https://github.com/mxli417/optisearch) is intentionally minimal at this stage; follow the [project overview]({{ "/projects/" | relative_url }}) for its current scope.
 
 ## Where things become interesting
 
