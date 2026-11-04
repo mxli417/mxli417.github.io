@@ -71,7 +71,7 @@ toolkit which allows us to model the problem properly. We need:
 and all available information as to where we expect the target to reside
 * a **detection function** $b(z)$ which relates time spent searching in a cell
 to the probability of detecting the target given that it is in the cell.
-An interesting choice[1] is the exponential function $b(z)=1-e^{-z}$ where $z \ge 0$ is the time spent looking, measured in hours
+An interesting choice[^exponential] is the exponential function $b(z)=1-e^{-z}$ where $z \ge 0$ is the time spent looking, measured in hours
 * an **allocation** $f$ where $f(j)$ is the amount of time spent looking in cell $j$ for $j=1,2$
 * an **objective function** which gives the overall probability of detection:
 $$ P[f] = p(1)b(f(1)) + p(2)b(f(2)) $$
@@ -96,18 +96,18 @@ Stone's key observation is surprisingly simple.
 
 Suppose we spend a tiny additional amount of effort $\Delta z$ searching drawer $j$. The resulting increase in probability of detection is approximately
 
-$$ p(j)b'(f(j))\Delta z $$
+$$ p(j)b^{\prime}(f(j))\Delta z $$
 
 The quantity
 
-$$ p(j)b'(f(j)) $$
+$$ p(j)b^{\prime}(f(j)) $$
 
 therefore measures the **marginal return** of spending another unit of effort in drawer $j$.
 
 For the exponential detection function,
 
 $$
-b'(z)=e^{-z},
+b^{\prime}(z)=e^{-z},
 $$
 
 so the marginal return becomes
@@ -185,7 +185,7 @@ This is the point where the concavity of the detection function becomes crucial.
 Because the marginal returns
 
 $$
-p(j)b'(f(j))
+p(j)b^{\prime}(f(j))
 $$
 
 decrease continuously as effort is accumulated, every additional unit of search effort becomes less valuable than the previous one. Whenever one location offers a larger marginal return than another, effort can be shifted toward the better location and the objective function increases.
@@ -206,7 +206,7 @@ Write $t_j=f(j)$. With unequal detection rates $a_j>0$ and costs $c_j>0$, the sa
 
 $$ P(t)=\sum_{j=1}^2 p_j(1-e^{-a_jt_j}),\qquad t_j\geq0,\quad \sum_{j=1}^2 c_jt_j\leq K. $$
 
-The Lagrangian is $L=P(t)-\lambda(\sum_j c_jt_j-K)+\sum_j\mu_jt_j$ with $\lambda,\mu_j\geq0$. Its stationarity and complementary-slackness conditions give
+The Lagrangian is $L=P(t)-\lambda(\sum_j c_jt_j-K)+\sum_j\mu_jt_j$ with $\lambda,\mu_j\geq0$.[^lagrange] Its stationarity and complementary-slackness conditions give
 
 $$ \frac{p_ja_je^{-a_jt_j}}{c_j}=\lambda\quad\text{if }t_j>0,\qquad \frac{p_ja_j}{c_j}\leq\lambda\quad\text{if }t_j=0. $$
 
@@ -216,7 +216,7 @@ For completeness, concavity gives a direct global certificate. For any feasible 
 
 $$ P(t)\leq P(t^*)+\nabla P(t^*)^\top(t-t^*)\leq P(t^*)+\lambda\sum_jc_j(t_j-t_j^*)\leq P(t^*). $$
 
-The middle inequality uses the marginal bound at unused drawers and $t_j\geq0$ there. This proves global optimality, including boundary solutions. For positive priors and rates, the objective is strictly concave, so the allocation is unique. This conclusion assumes a stationary target, separable detection functions, divisible effort, and no switching costs.
+The middle inequality uses the marginal bound at unused drawers and $t_j\geq0$ there. This proves global optimality, including boundary solutions. For positive priors and rates, the objective is strictly concave, so the allocation is unique. This conclusion assumes a stationary target, separable detection functions,[^separable] divisible effort, and no switching costs.
 
 For the original example this yields the complete rule:
 
@@ -249,9 +249,9 @@ $$ t_1^*=\operatorname{clip}\left(\frac{\log\left(\frac{p_1a_1/c_1}{p_2a_2/c_2}\
 
 If the entire search fails, Bayes' rule gives
 
-$$ p_j'=\frac{p_je^{-a_jt_j}}{p_1e^{-a_1t_1}+p_2e^{-a_2t_2}}. $$
+$$ p_j^{\prime}=\frac{p_je^{-a_jt_j}}{p_1e^{-a_1t_1}+p_2e^{-a_2t_2}}. $$
 
-Under the default interior solution the two posteriors are equal. With unequal costs or rates, equal marginal gains per cost do not generally imply equal posteriors. These updates assume the coin is in one of the drawers and remains there throughout the search.
+If instead we search only one drawer and do not detect the coin, the same calculation becomes a particularly transparent negative-observation update.[^drawer-update] Under the default interior solution the two posteriors are equal. With unequal costs or rates, equal marginal gains per cost do not generally imply equal posteriors. These updates assume the coin is in one of the drawers and remains there throughout the search.
 
 <div id="two-drawer-widget" class="search-widget">
   <h3>Interactive two-drawer Bayesian search</h3>
@@ -374,7 +374,7 @@ The two-drawer example is almost comically small. Yet most of the machinery requ
 
 In real search-and-rescue operations, the prior is rarely given. Instead, it must be constructed from drift models, historical incidents, witness reports, environmental conditions, terrain information, expert judgement, and increasingly sophisticated statistical models.
 
-Likewise, the search does not end after a single allocation. Every unsuccessful search generates new information. Bayesian updating allows us to revise the posterior probability distribution and construct a new search plan based on what we have learned.
+Likewise, the search does not end after a single allocation. Every unsuccessful search generates new information. Bayesian updating allows us to revise the posterior probability distribution and construct a new search plan based on what we have learned.[^production-update]
 
 Finally, many real targets do not remain stationary: missing vessels drift, lost persons move on their own, and submarines maneuver. Searching for moving targets transforms the problem into a dynamic state-estimation problem involving stochastic processes, filtering, and prediction.
 
@@ -388,5 +388,16 @@ This is precisely the territory where Bayesian search theory grew from an elegan
 
 # Notes
 
-- [1]: The exponential function is not justified further and hence somewhat arbitrary w.r.t. the example, but it has handy features. First, it models the possibility that the target will be overlooked with a (small) positive probability despite the search effort, i.e. the searcher can "overlook" a coin with that detection function, which feels natural and reasonable. Second, the more time the searcher spends on a cell, the slower the rate of increase of probability of detection b.c. $b`(z) = e^{-z}$ is decreasing. This saturation effect or law of diminishing returns is utilized in other areas of research as well. Additionally, the exponential detection function is **memoryless**, i.e.
-$Pr(detection \: time \: z + h \:|\: failure \:to \:detect\:by\:time\:z) = \frac{b(z+h)-b(z)}{1-b(z)} = 1 - e^{-h}$ so the probability of detecting the target in the next time increment $h$ is independent from the previous time spent searching $z$. Note that this function is of the **concave** kind.
+[^exponential]: The exponential function is not justified further and is therefore somewhat arbitrary for this example, but it has useful properties. It allows the target to be overlooked despite positive search effort, and its derivative $b^{\prime}(z)=e^{-z}$ decreases with $z$, expressing diminishing returns. It is also **memoryless**:
+    $\Pr(\text{detection by }z+h\mid\text{not detected by }z)=\frac{b(z+h)-b(z)}{1-b(z)}=1-e^{-h}$.
+    Thus the conditional chance of detection during the next increment $h$ does not depend on the effort already spent. The function is increasing and concave.
+
+[^lagrange]: The multiplier method turns the constrained problem into an unconstrained expression whose stationary points also respect the constraints. Differentiating $L$ with respect to $t_j$ gives $\partial P/\partial t_j-\lambda c_j+\mu_j=0$. Complementary slackness adds $\lambda(\sum_jc_jt_j-K)=0$ and $\mu_jt_j=0$. If drawer $j$ receives positive effort, then $\mu_j=0$ and $(\partial P/\partial t_j)/c_j=\lambda$; every searched drawer therefore has the same marginal detection gain per unit cost. At an unused drawer, $\mu_j\geq0$ implies $(\partial P/\partial t_j)/c_j\leq\lambda$, so starting to search it cannot improve the solution. The multiplier $\lambda$ is also the *shadow value* of budget: locally, one additional unit of $K$ improves the optimal detection probability by approximately $\lambda$. These Karush--Kuhn--Tucker conditions are necessary here and, because the objective is concave and the feasible set is convex, sufficient for global optimality.
+
+[^separable]: A function is **separable** when it can be written as a sum of terms that each depend on only one decision variable. Here $P(t)=\sum_j p_jb_j(t_j)$: effort $t_j$ changes the contribution of drawer $j$ but not the detection function of another drawer. Consequently, the marginal return for a drawer is the one-dimensional derivative $p_jb_j^{\prime}(t_j)$, and if every $b_j$ is concave, their weighted sum is concave. This is what lets the equal-marginal-return/KKT conditions certify the global optimum. Overlapping sensor coverage, target motion between cells, shared-resource effects, or switching costs make the objective non-separable; then one drawer's effort can change another drawer's value, and the simple equalization rule must be replaced by a coupled optimization.
+
+[^drawer-update]: Let $H_j$ denote that the coin is in drawer $j$, and let $F_1(t)$ mean that a search of duration $t$ in drawer 1 produced no detection. Under the article's imperfect exponential detection model, $\Pr(F_1(t)\mid H_1)=e^{-a_1t}$, whereas $\Pr(F_1(t)\mid H_2)=1$ because searching drawer 1 cannot find a coin in drawer 2. Bayes' rule therefore gives
+    $\Pr(H_1\mid F_1(t))=\frac{p_1e^{-a_1t}}{p_1e^{-a_1t}+p_2}$ and $\Pr(H_2\mid F_1(t))=\frac{p_2}{p_1e^{-a_1t}+p_2}$.
+    With $p_1=2/3$, $p_2=1/3$, and $a_1=1$, these reduce to $p_1^{\prime}=\frac{2e^{-t}}{2e^{-t}+1}$ and $p_2^{\prime}=\frac{1}{2e^{-t}+1}$. After $t=\log 2$ hours without detection, both drawers have posterior probability $1/2$. A perfectly exhaustive inspection is a different observation model: if failure would be impossible when the coin is present, its likelihood is zero and the posterior probability of that drawer collapses to zero.
+
+[^production-update]: A production system would usually maintain probabilities over many spatial cells, routes, or state particles rather than two drawers. Each completed search action would produce a coverage record and observations; a calibrated sensor model would assign a likelihood such as $\Pr(\text{no detection}\mid\text{target state},\text{coverage},\text{conditions})$. The service would multiply every prior weight by that likelihood, normalize the weights into a posterior, propagate them through a motion model when the target can move, and optimize the next allocation. An occupancy-grid filter, hidden Markov model, or particle filter can implement this loop. Operationally, the system also needs timestamped and versioned inputs, explicit treatment of false positives and missed detections, correlated or overlapping searches, model-calibration monitoring, and an audit trail linking each posterior change to the evidence and model version that produced it. Reusing $e^{-at}$ without validating those assumptions would make the update numerically neat but operationally unreliable.
