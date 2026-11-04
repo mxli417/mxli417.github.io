@@ -121,6 +121,22 @@ h6 {
   max-width: 52rem;
 }
 
+/*
+ * So Simple's stock post layout reserves a 175px grid column for a sidebar.
+ * This site intentionally uses a single-column post template, so leaving that
+ * grid active places the whole article in the (now orphaned) sidebar column.
+ */
+.layout--post .page-wrapper {
+  display: block;
+  max-width: 52rem;
+}
+
+.layout--post .page-content {
+  float: none;
+  width: auto;
+  min-width: 0;
+}
+
 .page-content {
   margin: 0;
   padding-top: 2.5rem;
@@ -377,6 +393,73 @@ h6 {
   margin-bottom: 1.25rem;
 }
 
+.bookie-showcase {
+  margin-top: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid var(--site-border);
+  border-radius: 0.5rem;
+  background: var(--site-surface);
+}
+
+.bookie-showcase__intro {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+.bookie-showcase__intro h3,
+.bookie-showcase__intro p {
+  margin-top: 0;
+}
+
+.bookie-showcase__intro h3 {
+  margin-bottom: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.screenshot-gallery figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.screenshot-gallery__overview {
+  grid-column: 1 / -1;
+}
+
+.screenshot-gallery a {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: 0.4rem;
+  background: #0b1424;
+}
+
+.screenshot-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 180ms ease;
+}
+
+.screenshot-gallery a:hover img {
+  transform: scale(1.01);
+}
+
+.screenshot-gallery figcaption {
+  margin: 0.55rem 0 0;
+  color: var(--site-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
 .eyebrow,
 .post-meta {
   color: var(--site-muted);
@@ -522,8 +605,14 @@ table {
   .home-profile,
   .home-publication,
   .about-hero,
-  .about-profile {
+  .about-profile,
+  .bookie-showcase__intro,
+  .screenshot-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .screenshot-gallery__overview {
+    grid-column: 1;
   }
 
   .about-hero__visual {

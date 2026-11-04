@@ -25,6 +25,6 @@ wish I had come across earlier myself.
 If you already know me, you might recognize this view from my home village.
 If not, feel free to make a guess.
 
-![Home village](/assets/style_transfer_result_at_iteration_34.png)
+![An abstract, blue-and-sand style-transfer view of my home village]({{ '/assets/imgs/style_transfer_result_at_iteration_34.png' | relative_url }})
 
 — mxli417

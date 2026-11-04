@@ -3,7 +3,7 @@ author: "mxli417"
 description: "Applied machine learning, NLP, and statistics: research papers, open-source projects, and technical notes by Maximilian Meidinger."
 url: "https://mxli417.github.io"
 baseurl: ""
-exclude: [README.md, BACKLOG.md, thought_archive, scripts]
+exclude: [README.md, BACKLOG.md, STAGING_TESTS.md, thought_archive, scripts]
 permalink: /:title/
 lang: "en"
 excerpt_separator: "\n\n\n"

@@ -13,7 +13,7 @@ classes: [top-level]
       <p class="section-hero__lede">I build and evaluate machine-learning systems that have to work beyond a benchmark or a polished demo.</p>
     </div>
     <figure class="about-hero__visual">
-      <img src="{{ '/assets/style_transfer_result_at_iteration_34.png' | relative_url }}" width="572" height="467" alt="An abstract, blue-and-sand style-transfer view of a mountain village">
+      <img src="{{ '/assets/imgs/style_transfer_result_at_iteration_34.png' | relative_url }}" width="571" height="500" alt="An abstract, blue-and-sand style-transfer view of a mountain village">
       <figcaption>A neural style-transfer experiment based on a view from my home village.</figcaption>
     </figure>
   </header>
